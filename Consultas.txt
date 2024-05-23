@@ -1,0 +1,26 @@
+select * from Armas;
+select * from Personajes;
+select * from Mapas;
+select * from Partidas;
+
+
+-- Muestra el nombre el personaje que tenga como habilidad_1 "Orbe Curativo". -- 
+
+    
+-- Mostrar el precio y la capacidad del cargador de todas las armas de tipo "Rifle":
+
+    
+-- Mostrar todos los datos de los personajes que sean de género femenino y su nacionalidad sea desconocida:
+
+    
+-- Mostrar los mapas que tengan más de 2 sitios disponibles para plantar la Spike:
+
+    
+-- Mostrar el nombre de los personajes que tengan una habilidad definitiva de fuego:
+
+
+-- Mostrar la duración promedio de todas las partidas:
+    
+    
+-- Mostrar los nombres de los personajes que hayan sido utilizados en partidas donde el modo de juego sea "Competitivo"
+    -- donde el resultado haya sido una victoria con una puntuación final igual a 13 a 12. 

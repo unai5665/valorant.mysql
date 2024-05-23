@@ -64,6 +64,17 @@ CREATE TABLE Personajes (
     INDEX nombre_idx (nombre)
 ) ENGINE = InnoDB;
 
+CREATE VIEW RolesPersonajes AS
+SELECT 
+    p1.id_personaje, p1.nombre, p1.habilidad_1, p1.habilidad_2, p1.habilidad_3, p1.definitiva, p1.descripcion, p1.rol, p1.nacionalidad, p1.genero
+FROM 
+    Personajes p1
+JOIN (
+    SELECT MIN(id_personaje) as id_personaje, rol
+    FROM Personajes
+    GROUP BY rol
+) p2 ON p1.id_personaje = p2.id_personaje;
+
 -- Crea la tabla Mapas
 CREATE TABLE Mapas (
     id_mapa INT AUTO_INCREMENT PRIMARY KEY,

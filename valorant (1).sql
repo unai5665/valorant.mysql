@@ -18,7 +18,9 @@ CREATE TABLE Arma1 (
     capacidad_cargador INT,
     danio_cabeza INT,
     danio_cuerpo INT,
-    danio_piernas INT
+    danio_piernas INT,
+    INDEX nombre_idx (nombre),
+    INDEX precio_idx (precio)
 ) ENGINE = InnoDB;
 
 CREATE TABLE Arma2 (
@@ -30,7 +32,9 @@ CREATE TABLE Arma2 (
     capacidad_cargador INT,
     danio_cabeza INT,
     danio_cuerpo INT,
-    danio_piernas INT
+    danio_piernas INT,
+    INDEX nombre_idx (nombre),
+    INDEX precio_idx (precio)
 ) ENGINE = InnoDB;
 
 CREATE TABLE Arma3 (
@@ -56,7 +60,8 @@ CREATE TABLE Personajes (
     descripcion TEXT,
     rol VARCHAR(100),
     nacionalidad VARCHAR(100),
-    genero VARCHAR(50)
+    genero VARCHAR(50),
+    INDEX nombre_idx (nombre)
 ) ENGINE = InnoDB;
 
 -- Crea la tabla Mapas
@@ -64,9 +69,9 @@ CREATE TABLE Mapas (
     id_mapa INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255),
     descripcion TEXT,
-    numero_sites INT
+    numero_sites INT,
+    INDEX nombre_idx (nombre)
 ) ENGINE = InnoDB;
-
 -- Crea la tabla Partidas
 CREATE TABLE Partidas (
     id_partida INT AUTO_INCREMENT PRIMARY KEY,

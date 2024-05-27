@@ -18,9 +18,7 @@ CREATE TABLE Arma1 (
     capacidad_cargador INT,
     danio_cabeza INT,
     danio_cuerpo INT,
-    danio_piernas INT,
-    INDEX nombre_idx (nombre),
-    INDEX precio_idx (precio)
+    danio_piernas INT
 ) ENGINE = InnoDB;
 
 CREATE TABLE Arma2 (
@@ -32,9 +30,7 @@ CREATE TABLE Arma2 (
     capacidad_cargador INT,
     danio_cabeza INT,
     danio_cuerpo INT,
-    danio_piernas INT,
-    INDEX nombre_idx (nombre),
-    INDEX precio_idx (precio)
+    danio_piernas INT
 ) ENGINE = InnoDB;
 
 CREATE TABLE Arma3 (
@@ -60,34 +56,22 @@ CREATE TABLE Personajes (
     descripcion TEXT,
     rol VARCHAR(100),
     nacionalidad VARCHAR(100),
-    genero VARCHAR(50),
-    INDEX nombre_idx (nombre)
+    genero VARCHAR(50)
 ) ENGINE = InnoDB;
-
-CREATE VIEW RolesPersonajes AS
-SELECT 
-    p1.id_personaje, p1.nombre, p1.habilidad_1, p1.habilidad_2, p1.habilidad_3, p1.definitiva, p1.descripcion, p1.rol, p1.nacionalidad, p1.genero
-FROM 
-    Personajes p1
-JOIN (
-    SELECT MIN(id_personaje) as id_personaje, rol
-    FROM Personajes
-    GROUP BY rol
-) p2 ON p1.id_personaje = p2.id_personaje;
 
 -- Crea la tabla Mapas
 CREATE TABLE Mapas (
     id_mapa INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255),
     descripcion TEXT,
-    numero_sites INT,
-    INDEX nombre_idx (nombre)
+    numero_sites INT
 ) ENGINE = InnoDB;
+
 -- Crea la tabla Partidas
 CREATE TABLE Partidas (
     id_partida INT AUTO_INCREMENT PRIMARY KEY,
     modo_juego VARCHAR(100),
-    duracion VARCHAR(15),
+    duracion TIME,
     resultado VARCHAR(50),
     puntuacion_final VARCHAR(10),
     id_mapa INT,
@@ -102,16 +86,16 @@ CREATE TABLE Partidas (
     FOREIGN KEY (id_arma3) REFERENCES Arma3(id_arma3)
 ) ENGINE = InnoDB;
 
-INSERT INTO Arma2 (nombre, tipo, precio, cadencia_fuego, capacidad_cargador, danio_cabeza, danio_cuerpo, danio_piernas) 
-VALUES 
+INSERT INTO Arma2 (nombre, tipo, precio, cadencia_fuego, capacidad_cargador, danio_cabeza, danio_cuerpo, danio_piernas)
+VALUES
     ('Ghost', 'Pistola', 500, 6.75, 15, 105, 30, 25),
     ('Classic', 'Pistola', 0, 6.75, 12, 78, 26, 22),
     ('Sheriff', 'Pistola', 800, 4, 6, 160, 55, 47),
     ('Shorty', 'Escopeta', 300, 3.3, 2, 36, 12, 10),
     ('Frenzy', 'Pistola', 450, 10, 13, 156, 39, 33);
-    
-INSERT INTO Arma1 (nombre, tipo, precio, cadencia_fuego, capacidad_cargador, danio_cabeza, danio_cuerpo, danio_piernas) 
-VALUES 
+   
+INSERT INTO Arma1 (nombre, tipo, precio, cadencia_fuego, capacidad_cargador, danio_cabeza, danio_cuerpo, danio_piernas)
+VALUES
     ('Stinger', 'Subfusil', 1100, 18, 20, 67, 27, 23),
     ('Spectre', 'Subfusil', 1600, 13.33, 30, 160, 26, 22),
     ('Vandal', 'Rifle', 2900, 9, 25, 160, 40, 34),
@@ -125,12 +109,12 @@ VALUES
     ('Guardian', 'Rifle', 2250, 6.5, 12, 195, 65, 49);
 
 -- Inserta armas de tipo Escopeta en Armas y Arma3
-INSERT INTO Arma3 (nombre, tipo, precio, cadencia_fuego, capacidad_cargador, danio_cabeza, danio_cuerpo, danio_piernas) 
-VALUES 
+INSERT INTO Arma3 (nombre, tipo, precio, cadencia_fuego, capacidad_cargador, danio_cabeza, danio_cuerpo, danio_piernas)
+VALUES
     ('Cuchillo', 'Cuerpo', 0,1, 1, 150, 75, 50);
 
 -- Inserta datos en la tabla Mapas
-INSERT INTO Mapas (nombre, descripcion, numero_sites) 
+INSERT INTO Mapas (nombre, descripcion, numero_sites)
 VALUES
     ('Bind', 'Bind tiene dos puntos de ataque y un objetivo que los defensores pueden defender desde varios ángulos.', 2),
     ('Lotus', 'Lotus tiene tres puntos de ataque, lo que permite estrategias de juego más variadas.', 3),
@@ -140,7 +124,7 @@ VALUES
     ('Breeze', 'Breeze es un mapa situado en una isla tropical con amplios espacios abiertos y varias rutas de ataque y defensa.', 2);
 
 -- Inserta datos en la tabla Personajes
-INSERT INTO Personajes (nombre, habilidad_1, habilidad_2, habilidad_3, definitiva, descripcion, rol, nacionalidad, genero) 
+INSERT INTO Personajes (nombre, habilidad_1, habilidad_2, habilidad_3, definitiva, descripcion, rol, nacionalidad, genero)
 VALUES
     ('Jett', 'Corriente Ascendente', 'Cuchillas Vendaval', 'Rabia del Viento', 'Tormenta de Navajas', 'Jett es una maestra de la agilidad, que utiliza su rapidez para superar a sus oponentes.', 'Duelista', 'Coreana', 'Femenino'),
     ('Phoenix', 'Bola Caliente', 'Resplandor', 'Muro de Fuego', 'Fuego de la Gran Fénix', 'Phoenix es un duelista elemental que puede cuidarse a sí mismo o quemar a los enemigos.', 'Duelista', 'Británico', 'Masculino'),
@@ -154,7 +138,7 @@ VALUES
     ('Reyna', 'Desafío', 'Curación', 'Orbe Cegador', 'Emperatriz', 'Reyna es una vampira de origen mexicano que puede absorber almas de enemigos derrotados para aumentar temporalmente su poder.', 'Duelista', 'Mexicana', 'Femenino');
 
 -- Inserta datos en la tabla Partidas
-INSERT INTO Partidas (modo_juego, duracion, resultado, puntuacion_final, id_mapa, id_personaje, id_arma1, id_arma2, id_arma3) 
+INSERT INTO Partidas (modo_juego, duracion, resultado, puntuacion_final, id_mapa, id_personaje, id_arma1, id_arma2, id_arma3)
 VALUES
     ('Competitivo', '0:25:30', 'Victoria', '13 a 12', 1, 5, 9, 1, 1),
     ('Competitivo', '0:28:45', 'Victoria', '13 a 9', 3, 7, 6, 2, 1),
@@ -168,10 +152,38 @@ VALUES
     ('Competitivo', '0:26:30', 'Victoria', '13 a 10', 1, 5, 9, 1, 1),
     ('Competitivo', '0:27:45', 'Derrota', '8 a 13', 3, 7, 6, 2, 1),
     ('Competitivo', '0:24:55', 'Victoria', '13 a 9', 2, 4, 4, 3, 1),
-    ('No Clasificatoria', '0:22:20', 'Derrota', '7 a 13', 3, 7, 6, 2, 1),
+    ('No Clasificatoria', '0:21:40', 'Derrota', '2 a 13', 2, 8, 3, 4, 1),
     ('Competitivo', '0:25:30', 'Derrota', '7 a 13', 4, 3, 5, 2, 1),
-    ('Competitivo', '0:26:30', 'Victoria', '13 a 10', 1, 5, 9, 1, 1),
+    ('Competitivo', '0:34:27', 'Victoria', '13 a 10', 1, 3, 9, 1, 1),
     ('Competitivo', '0:27:45', 'Derrota', '8 a 13', 3, 7, 6, 2, 1),
     ('Competitivo', '0:24:55', 'Victoria', '13 a 9', 2, 4, 4, 3, 1),
     ('Competitivo', '0:25:30', 'Derrota', '7 a 13', 4, 3, 5, 2, 1);
 
+-- Aplicar restricciones a la tabla Partidas
+
+ALTER TABLE Partidas
+
+ADD CONSTRAINT fk_partidas_mapas
+FOREIGN KEY (id_mapa) REFERENCES Mapas(id_mapa)
+ON DELETE RESTRICT
+ON UPDATE RESTRICT,
+
+ADD CONSTRAINT fk_partidas_personajes
+FOREIGN KEY (id_personaje) REFERENCES Personajes(id_personaje)
+ON DELETE CASCADE
+ON UPDATE RESTRICT,
+
+ADD CONSTRAINT fk_partidas_arma1
+FOREIGN KEY (id_arma1) REFERENCES Arma1(id_arma1)
+ON DELETE RESTRICT
+ON UPDATE RESTRICT,
+
+ADD CONSTRAINT fk_partidas_arma2
+FOREIGN KEY (id_arma2) REFERENCES Arma2(id_arma2)
+ON DELETE RESTRICT
+ON UPDATE RESTRICT,
+
+ADD CONSTRAINT fk_partidas_arma3
+FOREIGN KEY (id_arma3) REFERENCES Arma3(id_arma3)
+ON DELETE RESTRICT
+ON UPDATE RESTRICT;

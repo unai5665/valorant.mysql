@@ -187,3 +187,93 @@ ADD CONSTRAINT fk_partidas_arma3
 FOREIGN KEY (id_arma3) REFERENCES Arma3(id_arma3)
 ON DELETE RESTRICT
 ON UPDATE RESTRICT;
+
+-- Procedimiento InsertarArma1 y ActualizarMapa
+DELIMITER //
+
+CREATE PROCEDURE InsertarArma1 (
+    IN p_nombre VARCHAR(255),
+    IN p_tipo VARCHAR(100),
+    IN p_precio INT,
+    IN p_cadencia_fuego FLOAT,
+    IN p_capacidad_cargador INT,
+    IN p_danio_cabeza INT,
+    IN p_danio_cuerpo INT,
+    IN p_danio_piernas INT
+)
+BEGIN
+    INSERT INTO Arma1 (nombre, tipo, precio, cadencia_fuego, capacidad_cargador, danio_cabeza, danio_cuerpo, danio_piernas)
+    VALUES (p_nombre, p_tipo, p_precio, p_cadencia_fuego, p_capacidad_cargador, p_danio_cabeza, p_danio_cuerpo, p_danio_piernas);
+END //
+
+
+    CREATE PROCEDURE ActualizarMapa (
+    IN p_id_mapa INT,
+    IN p_nombre VARCHAR(255),
+    IN p_descripcion TEXT,
+    IN p_numero_sites INT
+)
+BEGIN
+    UPDATE Mapas
+    SET nombre = p_nombre,
+        descripcion = p_descripcion,
+        numero_sites = p_numero_sites
+    WHERE id_mapa = p_id_mapa;
+END //
+
+-- Funciones ActualizarPrecioArma1, ActualizarPrecioArma2  y PartidasJugadasEnMapa
+CREATE FUNCTION ActualizarPrecioArma1 (
+    p_id_arma1 INT,
+    p_nuevo_precio INT
+) RETURNS BOOLEAN
+BEGIN
+    DECLARE rows_affected INT;
+    UPDATE Arma1
+    SET precio = p_nuevo_precio
+    WHERE id_arma1 = p_id_arma1;
+    
+    SET rows_affected = ROW_COUNT();
+
+    IF rows_affected > 0 THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+END //
+
+
+
+CREATE FUNCTION ActualizarPrecioArma2 (
+    p_id_arma2 INT,
+    p_nuevo_precio INT
+) RETURNS BOOLEAN
+BEGIN
+    DECLARE rows_affected INT;
+    UPDATE Arma2
+    SET precio = p_nuevo_precio
+    WHERE id_arma2 = p_id_arma2;
+    
+    SET rows_affected = ROW_COUNT();
+
+    IF rows_affected > 0 THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+END //
+
+DELIMITER ;
+
+CREATE FUNCTION PartidasJugadasEnMapa (
+    p_id_mapa INT
+) RETURNS INT
+BEGIN
+    DECLARE total_partidas INT;
+    SELECT COUNT(*)
+    INTO total_partidas
+    FROM Partidas
+    WHERE id_mapa = p_id_mapa;
+    RETURN total_partidas;
+END //
+
+DELIMITER ;

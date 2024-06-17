@@ -247,6 +247,7 @@ CREATE FUNCTION ActualizarPrecioArma2 (
     p_id_arma2 INT,
     p_nuevo_precio INT
 ) RETURNS BOOLEAN
+DETERMINISTIC
 BEGIN
     DECLARE rows_affected INT;
     UPDATE Arma2
@@ -267,6 +268,7 @@ DELIMITER ;
 CREATE FUNCTION PartidasJugadasEnMapa (
     p_id_mapa INT
 ) RETURNS INT
+DETERMINISTIC
 BEGIN
     DECLARE total_partidas INT;
     SELECT COUNT(*)

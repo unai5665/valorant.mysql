@@ -226,6 +226,7 @@ CREATE FUNCTION ActualizarPrecioArma1 (
     p_id_arma1 INT,
     p_nuevo_precio INT
 ) RETURNS BOOLEAN
+DETERMINISTIC
 BEGIN
     DECLARE rows_affected INT;
     UPDATE Arma1
@@ -265,17 +266,27 @@ END //
 
 DELIMITER ;
 
+-- Establecer el delimitador
+DELIMITER //
+
+-- Definir la función PartidasJugadasEnMapa
 CREATE FUNCTION PartidasJugadasEnMapa (
     p_id_mapa INT
 ) RETURNS INT
 DETERMINISTIC
 BEGIN
     DECLARE total_partidas INT;
+    
+    -- Contar el número de partidas para el mapa dado
     SELECT COUNT(*)
     INTO total_partidas
     FROM Partidas
     WHERE id_mapa = p_id_mapa;
+    
+    -- Devolver el resultado
     RETURN total_partidas;
 END //
 
+-- Restaurar el delimitador predeterminado
 DELIMITER ;
+
